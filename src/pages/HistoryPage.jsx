@@ -14,7 +14,7 @@ function HistoryPage() {
       
       
     return (
-        <div>
+        <div className="min-h-screen flex items-center  w-full justify-center bg-gradient-custom">
             History
         </div>
     )
