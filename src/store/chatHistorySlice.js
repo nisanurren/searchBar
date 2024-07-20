@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Service from '../service';
 
-export const getChatHistory = createAsyncThunks(
+export const getChatHistory = createAsyncThunk(
     'chatHistory/getChatHistory',
     async ({ source, startEpoch, endEpoch }, { rejectWithValue }) => {
         try {

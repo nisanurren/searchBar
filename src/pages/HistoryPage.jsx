@@ -8,14 +8,12 @@ function HistoryPage() {
 
     useEffect(() => {
         dispatch(getChatHistory({source:['all'], startEpoch:1718830800000 , endEpoch: 1721509199999}))
-      },[dispatch]);
+    },[dispatch]);
     
     return (
         <div className="min-h-screen flex items-center  w-full justify-center bg-gradient-custom">
             <ul>
-                {chatHistory.map((message, index) => (
-                    <li key={index}>{message}</li>
-                ))}
+              {chatHistory[0]?.botName}
             </ul>
         </div>
     )

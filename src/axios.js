@@ -1,5 +1,4 @@
 import axios from "axios";
-import { store } from './store'
 
 //const headers = {
 //   Authorization: 'Bearer ' + apiKey,
@@ -13,8 +12,9 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
     (config) => {
-        const state = store.getState();
-        const apiKey = state.user.apiKey;
+
+        const apiKey = localStorage.getItem('apiKey')
+
 
         if (apiKey) {
             config.headers.Authorization = `Bearer ${apiKey}`;
