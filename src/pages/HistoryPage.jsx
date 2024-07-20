@@ -1,21 +1,22 @@
 import { useEffect } from "react";
-import axiosInstance from "../axios";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getChatHistory }  from '../store/chatHistorySlice';
 
 function HistoryPage() {
-  
+    const dispatch = useDispatch();
+    const { chatHistory, status, error } = useSelector((state) => state.chatHistory);
+
     useEffect(() => {
-        axiosInstance.get('/v2/bots/requests/public').then((response)=>{
-            console.log(response) 
-        }).catch((error)=>{
-            console.log(error)
-        })
-      }, );
-      
-      
+        dispatch(getChatHistory({source:['all'], startEpoch:1718830800000 , endEpoch: 1721509199999}))
+      },[dispatch]);
+    
     return (
         <div className="min-h-screen flex items-center  w-full justify-center bg-gradient-custom">
-            History
+            <ul>
+                {chatHistory.map((message, index) => (
+                    <li key={index}>{message}</li>
+                ))}
+            </ul>
         </div>
     )
     }
