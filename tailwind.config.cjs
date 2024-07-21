@@ -7,11 +7,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'custom-blue': '#1a1a6c',
+        'custom-blue': '#040433',
         'custom-black': '#000000',
+        'fini-blue': '#0052cc',
+        'fini-light': '#ccdae7'
       },
       backgroundImage: {
-        'gradient-custom': 'linear-gradient(to bottom, #1a1a6c, #000000)',
+        'gradient-custom': 'linear-gradient(to bottom, #040433, #000000)',
       },
     },
   },

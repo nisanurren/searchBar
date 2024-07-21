@@ -27,19 +27,16 @@ function App() {
       <AppContext.Provider value={providerState}>
         <div>
           <Router>
-            <div className="flex h-full overflow-hidden">
           
               <Routes>
                 <Route path="/login" element={<LoginPage />} />
-
                 <Route element={<PrivateRoute />}>
                 <Route path="/" element={<HelpCenter />} />
                 <Route path="/history" element={<HistoryPage></HistoryPage> }></Route>
                 </Route>
               </Routes>
-            </div>
           </Router>
-        </div>
+          </div>
       </AppContext.Provider>
     </div>
   )
