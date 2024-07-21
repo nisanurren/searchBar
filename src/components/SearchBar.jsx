@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { blue } from '@mui/material/colors';
+import questionSlice from '../store/questionSlice'
+import { useSelector }  from "react-redux";
 import {
   FormControl,
   OutlinedInput,
@@ -10,9 +12,13 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch } from "react-redux";
 import { askQuestionToChatBot, setQuestion } from "../store/questionSlice";
+import { RestorePageOutlined } from "@mui/icons-material";
 
 function SearchBar() {
   const [question, setLocalQuestion] = useState("");
+  const { response, status, error } = useSelector((state) => state.question);
+  const [displayedResponse, setDisplayedResponse] = useState('');
+  const [index, setIndex] = useState(0);
   const dispatch = useDispatch();
 
   const handleQuestion = (e) => {
@@ -26,9 +32,21 @@ function SearchBar() {
     if (!question.length) {
       return;
     }
+    setDisplayedResponse('');
+    setIndex(0);
     dispatch(setQuestion(question))
     dispatch(askQuestionToChatBot(question))
   };
+
+  useEffect(() => {
+    if (index < response.length) {
+      const timeoutId = setTimeout(() => {
+        setDisplayedResponse((prev) => prev + response[index]);
+        setIndex((prev) => prev + 1);
+      }, 50); // Adjust the speed by changing the timeout duration
+      return () => clearTimeout(timeoutId);
+    }
+  }, [index, response]);
 
   return (
     <div className="w-full">
@@ -61,6 +79,10 @@ function SearchBar() {
         </button>
       </form>
       </div>
+
+      <div className='text-fini-light'>
+        { displayedResponse}
+    </div>
     </div>
   );
 }
