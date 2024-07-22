@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getChatHistory }  from '../store/chatHistorySlice';
+import HistoryTable  from '../components/HistoryTable'
 
 function HistoryPage() {
     const dispatch = useDispatch();
@@ -12,9 +13,7 @@ function HistoryPage() {
     
     return (
         <div className="min-h-screen flex items-center  w-full justify-center bg-gradient-custom">
-            <ul>
-              {chatHistory[0]?.botName}
-            </ul>
+          <HistoryTable history={chatHistory}></HistoryTable>
         </div>
     )
     }
