@@ -29,7 +29,7 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
                     ? entry.content
                     : index < chatHistory.length - 1
                     ? entry.content
-                    : entry.content}
+                    : displayedResponse}
                 </div>
               </div>
             )

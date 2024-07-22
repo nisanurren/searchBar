@@ -27,21 +27,21 @@ function SearchBar() {
   };
 
   useEffect(() => {
-
     if (!latestResponse) return;
 
+    let localIndex = 0; // Use a local variable for response index
+    setDisplayedResponse(''); // Reset displayed response
     const intervalId = setInterval(() => {
-      if (responseIndex < latestResponse.length) {
-        setDisplayedResponse((prev) => prev + latestResponse[responseIndex]);
-        setResponseIndex((prev) => prev + 1);
+      if (localIndex < latestResponse.length-1) {
+        setDisplayedResponse((prev) =>  prev + latestResponse[localIndex])
+        localIndex += 1; // Increment the local index
       } else {
         clearInterval(intervalId);
       }
     }, 50);
 
     return () => clearInterval(intervalId);
-  }, [latestResponse, responseIndex]);
-
+  }, [latestResponse]);
 
   return (
     <div className="w-full">
