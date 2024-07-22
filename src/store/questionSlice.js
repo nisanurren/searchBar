@@ -39,7 +39,6 @@ const questionSlice = createSlice({
             .addCase(askQuestionToChatBot.fulfilled, (state, action) => {
                 //When request is successfully set reponse to state
                 state.status = 'succeeded';
-                state.chatHistory.push({ role: 'user', content: action.payload.question })
                 state.chatHistory.push({ role: 'assistant', content: action.payload.answer })
                 state.latestResponse = action.payload.answer
             })
