@@ -22,7 +22,6 @@ function SearchBar() {
     if (!question.length) return;
     setDisplayedResponse('');
     setResponseIndex(0);
-    dispatch(setQuestion(question))
     dispatch(askQuestionToChatBot(question));
     setLocalQuestion('');
   };

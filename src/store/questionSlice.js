@@ -4,8 +4,9 @@ import Service from '../service'
 
 export const askQuestionToChatBot = createAsyncThunk(
     'question/askQuestionToChatBot',
-    async (question, { getState, rejectWithValue }) => {
+    async (question, { dispatch, getState, rejectWithValue }) => {
         const chatHistory = getState().question.chatHistory;
+        dispatch(setQuestion(question))
         try {
             const response = await Service.askQuestion(question, chatHistory);
             return { question, answer: response.data.answer };
