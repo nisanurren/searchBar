@@ -29,22 +29,31 @@ function SearchBar() {
 
   useEffect(() => {
 
-    console.log(latestResponse)
-  }, [latestResponse]);
+    if (!latestResponse) return;
+
+    const intervalId = setInterval(() => {
+      if (responseIndex < latestResponse.length) {
+        setDisplayedResponse((prev) => prev + latestResponse[responseIndex]);
+        setResponseIndex((prev) => prev + 1);
+      } else {
+        clearInterval(intervalId);
+      }
+    }, 50);
+
+    return () => clearInterval(intervalId);
+  }, [latestResponse, responseIndex]);
+
 
   return (
     <div className="w-full">
-      <div className="bg-transparent p-8 rounded shadow-md max-w-sm border border-fini-light">
-        <form className="w-full p-8 rounded shadow-md" onSubmit={(e) => e.preventDefault()}>
-          <label htmlFor="question" className="block text-[#ccdae7] text-xl mb-4">
-            Ask me
-          </label>
+
+        <form className="w-full p-8 bg-white bg-opacity-10 p-8 rounded-xl " onSubmit={(e) => e.preventDefault()}>
           <div className="relative mb-4">
             <input
               type="text"
               id="question"
               className="w-full p-4 border h-14 border-[#ccdae7] rounded-xl text-[#ccdae7] bg-transparent focus:outline-none focus:ring-2 focus:ring-[#ccdae7]"
-              placeholder="Ask me"
+              placeholder="Ask anything"
               onClick={() => setModalOpen(true)}
               readOnly
             />
@@ -57,7 +66,7 @@ function SearchBar() {
             </button>
           </div>
         </form>
-      </div>
+    
 
       <SearchModal
         open={modalOpen}
@@ -66,6 +75,7 @@ function SearchBar() {
         onSubmit={handleQuestionSubmit}
         chatHistory={chatHistory}
         displayedResponse={displayedResponse}
+        onClose={() => setModalOpen(false)}
       />
     </div>
   );
