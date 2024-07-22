@@ -8,11 +8,11 @@ function HistoryPage() {
     const { chatHistory, status, error } = useSelector((state) => state.chatHistory);
 
     useEffect(() => {
-        dispatch(getChatHistory({source:['all'], startEpoch:1718830800000 , endEpoch: 1721509199999}))
+        dispatch(getChatHistory({source:['all'], startEpoch:1718830800000 , endEpoch: 1761509199999}))
     },[dispatch]);
     
     return (
-        <div className="min-h-screen flex items-center  w-full justify-center bg-gradient-custom">
+        <div className="min-h-screen flex items-center  w-full justify-center bg-gradient-custom p-6">
           <HistoryTable history={chatHistory}></HistoryTable>
         </div>
     )
