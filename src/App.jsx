@@ -25,7 +25,7 @@ function App() {
   return (
     <div>
       <AppContext.Provider value={providerState}>
-        <div>
+        <div className='bg-gradient-custom'>
           <Router>
           
               <Routes>

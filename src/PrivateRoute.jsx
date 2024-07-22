@@ -11,7 +11,7 @@ const PrivateRoute = () => {
     }
 
     return (
-        <div className="flex h-full overflow-hidden">
+        <div className="flex h-full">
         <SideBar></SideBar>
         
             <Outlet />

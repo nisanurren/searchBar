@@ -7,9 +7,9 @@ const Service = {
      * @param {array} messageHistory - The chat history
      * @returns {Promise<Object>} The response from the API
      */
-    askQuestion(question) {
+    askQuestion(question, messageHistory) {
         return axiosInstance
-            .post("/v2/bots/ask-question", { question: question })
+            .post("/v2/bots/ask-question", { question: question, messageHistory: messageHistory })
             .then((response) => {
                 console.log(0, response);
                 return response;

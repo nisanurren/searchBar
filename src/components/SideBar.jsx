@@ -20,7 +20,7 @@ function SideBar() {
   const sidebarItems = [{path: '/', label: 'Home'}, {path: '/history', label: 'History'}]
 
   return (
-    <div className="p-8 h-screen bg-gradient-custom" style={{ minWidth: "260px" }}>
+    <div className="p-8 h-screen" style={{ minWidth: "260px" }}>
       <div className="flex pb-4 justify-center">
         <img src={"/fini-logo.png"} className="mr-4" style={{ height: 40 }} />
       </div>

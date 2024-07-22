@@ -3,7 +3,7 @@ import SearchBar from '../components/SearchBar'
 
 function HelpCenter() {
   return (
-    <div className="min-h-screen w-full bg-gradient-custom">
+    <div className="min-h-screen w-full">
       <div className="p-20">
           <SearchBar></SearchBar>
       </div>

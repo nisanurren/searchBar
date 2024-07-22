@@ -4,10 +4,11 @@ import Service from '../service'
 
 export const askQuestionToChatBot = createAsyncThunk(
     'question/askQuestionToChatBot',
-    async (question, { rejectWithValue }) => {
+    async (question, { getState, rejectWithValue }) => {
+        const chatHistory = getState().question.chatHistory;
         try {
-            const response = await Service.askQuestion(question);
-            return response.data.answer;
+            const response = await Service.askQuestion(question, chatHistory);
+            return { question, answer: response.data.answer };
         } catch (error) {
             return rejectWithValue(error.response.data);
         }
@@ -16,8 +17,7 @@ export const askQuestionToChatBot = createAsyncThunk(
 
 
 const initialStateQuestion = {
-    question: '',
-    response: '',
+    chatHistory: [],
     status: '',
     error: null,
 }
@@ -27,19 +27,19 @@ const questionSlice = createSlice({
     initialState: initialStateQuestion,
     reducers: {
         setQuestion: (state, action) => {
-            state.question = action.payload;
+            state.chatHistory.push({ role: 'user', content: action.payload })
         },
     },
     extraReducers: (builder) => {
         builder
             .addCase(askQuestionToChatBot.pending, (state) => {
-                //Waiting for response
                 state.status = 'loading';
             })
             .addCase(askQuestionToChatBot.fulfilled, (state, action) => {
                 //When request is successfully set reponse to state
                 state.status = 'succeeded';
-                state.response = action.payload;
+                state.chatHistory.push({ role: 'user', content: action.payload.question })
+                state.chatHistory.push({ role: 'assistant', content: action.payload.answer })
             })
             .addCase(askQuestionToChatBot.rejected, (state, action) => {
                 state.status = 'failed';
