@@ -44,15 +44,15 @@ function SearchBar() {
   }, [latestResponse]);
 
   return (
-    <div className="w-full">
+    <div className="w-full max-w-screen-lg m-auto">
 
-        <form className="w-full p-8 bg-white bg-opacity-10 p-8 rounded-xl " onSubmit={(e) => e.preventDefault()}>
+        <form className="w-full bg-white bg-opacity-10 p-8 rounded-xl " onSubmit={(e) => e.preventDefault()}>
           <div className="relative mb-4">
             <input
               type="text"
               id="question"
               className="w-full p-4 border h-14 border-[#ccdae7] rounded-xl text-[#ccdae7] bg-transparent focus:outline-none focus:ring-2 focus:ring-[#ccdae7]"
-              placeholder="Ask anything"
+              placeholder="Ask anything..."
               onClick={() => setModalOpen(true)}
               readOnly
             />

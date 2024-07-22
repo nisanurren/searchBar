@@ -17,22 +17,27 @@ import CustomTableRow from "./CustomTableRow";
 
 function HistoryTable({ history }) {
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            {historyTableColumns.map((column) => (
-              <TableCell key={column.name}>{column.name}</TableCell>
+    <div className="w-full max-w-screen-lg m-auto"> 
+      <TableContainer         sx={{
+          bgcolor: 'gradient-custom',
+          minWidth: 500,
+        }} component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              {historyTableColumns.map((column) => (
+                <TableCell colSpan={2} key={column.name}>{column.name}</TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {history.map((row) => (
+              <CustomTableRow key={row.createdAt} data={row} />
             ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {history.map((row) => (
-            <CustomTableRow key={row.createdAt} data={row} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 }
 

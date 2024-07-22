@@ -27,16 +27,23 @@ function CustomTableRow({ data }) {
   return (
     <>
       <TableRow>
-        <TableCell>{data.source}</TableCell>
-        <TableCell>{data.question}</TableCell>
-        <TableCell>
-          {data.categories.map((c) => (
-            <div>{c}</div>
+        <TableCell colSpan={2} className="text-white">
+          <div
+            className={`p-2 rounded-md uppercase text-center bg-green-700 text-white`}
+          >
+            {data.source}
+          </div>{" "}
+        </TableCell>
+        <TableCell colSpan={2} className="text-white">{data.botName}</TableCell>
+        <TableCell colSpan={2} className="text-white">{data.question}</TableCell>
+        <TableCell colSpan={2}>
+          {data.categories.map((cat) => (
+            <div>{cat}</div>
           ))}
         </TableCell>
-        <TableCell>{data.ticketId ?? "-"}</TableCell>
-        <TableCell>{epochToHumanRead(data.createdAt)}</TableCell>
-        <TableCell>
+        <TableCell colSpan={2}>{data.ticketId ?? "-"}</TableCell>
+        <TableCell colSpan={2}>{epochToHumanRead(data.createdAt)}</TableCell>
+        <TableCell colSpan={2}>
           <div className="flex justify-around">
             <button
               onClick={() => setOpen(!open)}
@@ -51,9 +58,9 @@ function CustomTableRow({ data }) {
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={14}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <div className="p-6">
+            <div className="p-6  m-auto max-w-xl" >
               {data.messageHistory.map(
                 (entry, index) =>
                   entry.role !== "system" && (
@@ -78,6 +85,7 @@ function CustomTableRow({ data }) {
                     </div>
                   )
               )}
+  
             </div>
           </Collapse>
         </TableCell>

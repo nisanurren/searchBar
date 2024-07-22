@@ -12,7 +12,7 @@ function HistoryPage() {
     },[dispatch]);
     
     return (
-        <div className="min-h-screen flex items-center  w-full justify-center bg-gradient-custom p-6">
+        <div className="min-h-screen w-full justify-center bg-gradient-custom p-20">
           <HistoryTable history={chatHistory}></HistoryTable>
         </div>
     )

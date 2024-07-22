@@ -40,7 +40,7 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
             type="text"
             id="question"
             className="w-full p-3 h-12  border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Ask anything"
+            placeholder="Ask anything..."
             value={question}
             onChange={onQuestionChange}
           />

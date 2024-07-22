@@ -40,11 +40,9 @@ const Service = {
                 }
             })
             .then((response) => {
-                console.log(0, response);
-                return response.data;
+                return response.data
             })
             .catch((error) => {
-                console.log(error);
                 return error;
             });
     },

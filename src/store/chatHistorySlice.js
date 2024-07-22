@@ -25,7 +25,18 @@ const chatHistorySlice = createSlice({
     reducers: {
 
         setChatHistory: (state, action) => {
-            state.chatHistory = action.payload;
+
+            let updatedConversations = action.payload.map((conversation) => {
+
+                conversation.messageHistory.push({ role: 'user', content: conversation.question });
+                conversation.messageHistory.push({ role: 'assistant', content: conversation.answer });
+
+
+                return conversation;
+            });
+            state.chatHistory = updatedConversations
+
+
         },
     },
     extraReducers: (builder) => {
@@ -35,7 +46,15 @@ const chatHistorySlice = createSlice({
             })
             .addCase(getChatHistory.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.chatHistory = action.payload;
+                let updatedConversations = action.payload.map((conversation) => {
+
+                    conversation.messageHistory.push({ role: 'user', content: conversation.question });
+                    conversation.messageHistory.push({ role: 'assistant', content: conversation.answer });
+
+
+                    return conversation;
+                });
+                state.chatHistory = updatedConversations
             })
             .addCase(getChatHistory.rejected, (state, action) => {
                 state.status = 'failed';
