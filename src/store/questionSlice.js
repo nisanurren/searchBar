@@ -18,6 +18,7 @@ export const askQuestionToChatBot = createAsyncThunk(
 
 const initialStateQuestion = {
     chatHistory: [],
+    latestResponse: '',
     status: '',
     error: null,
 }
@@ -40,6 +41,7 @@ const questionSlice = createSlice({
                 state.status = 'succeeded';
                 state.chatHistory.push({ role: 'user', content: action.payload.question })
                 state.chatHistory.push({ role: 'assistant', content: action.payload.answer })
+                state.latestResponse = action.payload.answer
             })
             .addCase(askQuestionToChatBot.rejected, (state, action) => {
                 state.status = 'failed';

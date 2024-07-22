@@ -17,6 +17,7 @@ import { RestorePageOutlined } from "@mui/icons-material";
 function SearchBar() {
   const [question, setLocalQuestion] = useState("");
   const { chatHistory, status, error } = useSelector((state) => state.question);
+  const {latestResponse} = useSelector((state) => state.question);
   const [displayedResponse, setDisplayedResponse] = useState("");
   const lastResponse =
     chatHistory.length > 0 ? chatHistory[chatHistory.length - 1].content : "";
@@ -42,19 +43,24 @@ function SearchBar() {
   };
 
   useEffect(() => {
-      const answerFromApi = chatHistory[chatHistory.length - 1]?.content;
-      const intervalId = setInterval(() => {
+    const latestResponse = chatHistory[chatHistory.length - 1]?.content;
+    if (!latestResponse) return;
+
+    let localIndex = 0;
+    const intervalId = setInterval(() => {
+      if (localIndex < latestResponse.length) {
+        setDisplayedResponse((prev) => prev + latestResponse[localIndex]);
       
-        if (responseIndex < answerFromApi?.length) {
-          setDisplayedResponse((prev) => prev + answerFromApi[responseIndex]);
-          setResponseIndex((prev) => prev + 1);
-        } else {
-          clearInterval(intervalId);
-        }
-      }, 50); // Adjust the speed by changing the interval duration
-      return () => clearInterval(intervalId);
+        setResponseIndex(localIndex); 
+        localIndex += 1;
+      } else {
+        clearInterval(intervalId);
+      }
+    }, 50);
+
+    return () => clearInterval(intervalId);
   
-  }, [chatHistory, responseIndex]);
+  }, [chatHistory]);
 
   return (
     <div className="w-full">
