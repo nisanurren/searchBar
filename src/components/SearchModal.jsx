@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import CloseIcon from "@mui/icons-material/Close";
 import { getConversations, saveConversation, getConversationById } from '../utils/conversationManage';
 import { useSelector, useDispatch } from "react-redux";
@@ -7,9 +7,14 @@ import { setCurrentConversation } from '../store/questionSlice';
 const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, session, displayedResponse, onClose }) => {
   const dispatch = useDispatch();
   const [conversationId, setConversationId] = useState('');
+  const inputRef = useRef(null);
 
   useEffect(() => {
     if (open) {
+
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
       let conversationID = ''
       if(!session){
         conversationID = 'conv_' + new Date().getTime();
@@ -70,8 +75,7 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
                   key={index}
                   className={`flex mb-2 ${entry.role === "user" ? "justify-end" : "justify-start"}`}
                 >
-                  <div className={`rounded-lg text-left ${entry.role === "user" ? "bg-fini-blue text-white" : "bg-white text-black border border-fini-blue"} p-2 rounded`}>
-                    <strong>{entry.role === "user" ? "You" : "Bot"}:</strong>{" "}
+                  <div className={`rounded-lg text-left ${entry.role === "user" ? "bg-fini-blue text-white" : "bg-white text-black border border-fini-blue"} p-2 rounded`}>                  
                     {entry.role === "user" ? entry.content : index < chatHistory.length - 1 ? entry.content : entry.content}
                   </div>
                 </div>
@@ -80,10 +84,11 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
           </div>
           <div className="mb-4">
             <input
+              ref={inputRef} 
               type="text"
               id="question"
               className="w-full p-3 h-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Ask anything"
+              placeholder="Ask anything..."
               value={question}
               onChange={onQuestionChange}
             />

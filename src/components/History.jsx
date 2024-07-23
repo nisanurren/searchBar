@@ -15,6 +15,7 @@ function History({ onHistoryItemClick }) {
       <ul>
         {conversations.map((item) => (
           <li
+            key={item.id}
             onClick={() => onHistoryItemClick(item.id)}
             className="text-gray-400 p-3 hover:bg-fini-blue hover:text-white rounded-xl hover:rounded-xl`}"
           >
