@@ -4,15 +4,22 @@ import { getConversations, saveConversation, getConversationById } from '../util
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentConversation } from '../store/questionSlice';
 
-const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, displayedResponse, onClose }) => {
+const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, session, displayedResponse, onClose }) => {
   const dispatch = useDispatch();
   const [conversationId, setConversationId] = useState('');
 
   useEffect(() => {
     if (open) {
-      dispatch(setCurrentConversation([])); // Clear current chat
-      const newId = 'conv_' + new Date().getTime();
-      setConversationId(newId);  // Start new chat
+      let conversationID = ''
+      if(!session){
+        conversationID = 'conv_' + new Date().getTime();
+        dispatch(setCurrentConversation([]));
+      } else {
+        conversationID = session.id
+        dispatch(setCurrentConversation(session.conversation));
+      }
+       // Clear current chat
+      setConversationId(conversationID);  // Start new chat
     }
   }, [open, dispatch]);
 
@@ -21,7 +28,7 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
       const updatedConversation = { id: conversationId, question, conversation: chatHistory };
       saveConversation(updatedConversation);  // Save the current chat
     }
-  }, [chatHistory, conversationId, question]);
+  }, [chatHistory]);
 
   const handleSubmit = () => {
     if (!question.trim()) return;
@@ -46,7 +53,11 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
         <div className="p-6 rounded-xl bg-white">
           <div className="flex justify-between items-center mb-4">
             <button
-              onClick={onClose}
+              onClick={function(){
+                dispatch(setCurrentConversation([]));
+                setConversationId('');
+                onClose();
+              }}
               className="text-gray-400 hover:text-gray-600 focus:outline-none"
             >
               <CloseIcon />
@@ -61,7 +72,7 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
                 >
                   <div className={`rounded-lg text-left ${entry.role === "user" ? "bg-fini-blue text-white" : "bg-white text-black border border-fini-blue"} p-2 rounded`}>
                     <strong>{entry.role === "user" ? "You" : "Bot"}:</strong>{" "}
-                    {entry.role === "user" ? entry.content : index < chatHistory.length - 1 ? entry.content : displayedResponse}
+                    {entry.role === "user" ? entry.content : index < chatHistory.length - 1 ? entry.content : entry.content}
                   </div>
                 </div>
               )

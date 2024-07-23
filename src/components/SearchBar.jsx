@@ -4,11 +4,14 @@ import SearchIcon from "@mui/icons-material/Search";
 import { askQuestionToChatBot, setQuestion } from "../store/questionSlice";
 import SearchModal from '../components/SearchModal';
 import { LocalHospital } from "@mui/icons-material";
+import History from './History'
+import {getConversationById} from '../utils/conversationManage'
 
 function SearchBar() {
   const [question, setLocalQuestion] = useState("");
   const { chatHistory, latestResponse, status, error } = useSelector((state) => state.question);
 
+  const [session, setSession] = useState('');
   const [displayedResponse, setDisplayedResponse] = useState('');
   const [responseIndex, setResponseIndex] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
@@ -28,7 +31,16 @@ function SearchBar() {
 
 
   const clearLastChat = () => {
+    setSession('')
     setModalOpen(false)
+  }
+
+
+  const openSelectedChat =(value) =>{
+    const selectedChatHistory = getConversationById(value)
+    console.log(selectedChatHistory);
+    setSession(selectedChatHistory);
+    setModalOpen(true)
   }
 
   useEffect(() => {
@@ -78,9 +90,12 @@ function SearchBar() {
         onQuestionChange={handleQuestionChange}
         onSubmit={handleQuestionSubmit}
         chatHistory={chatHistory}
+        session={session}
         displayedResponse={displayedResponse}
         onClose={() => clearLastChat()}
       />
+
+      <History onHistoryItemClick={openSelectedChat}></History>
     </div>
   );
 }
