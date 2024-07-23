@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {epochToHumanRead} from "../utils/utilFunctions"
 import {
   Table,
   TableBody,
@@ -13,16 +14,19 @@ import {
   Typography,
 } from "@mui/material";
 import moment from "moment";
-import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
+import { KeyboardArrowDown, KeyboardArrowUp, TroubleshootOutlined } from "@mui/icons-material";
 
 function CustomTableRow({ data }) {
   const [open, setOpen] = useState(false);
-  const epochToHumanRead = (epoch) => {
-    let t = new Date(epoch);
-    return moment(t).format("DD.MM.YYYY hh:MM:ss");
-  };
-
-  const [collapsedContent, setCollapsedContent] = useState("");
+  const [detailCollapse, setDetailCollapse] = useState(false)
+  const [viewCollapse, setViewCollapse] = useState(false)
+  const openCollapse=(type)=>{
+    if (type === 'detail'){
+      setDetailCollapse(!detailCollapse)
+    }  else {
+      setViewCollapse(!viewCollapse)
+    }
+  }
 
   return (
     <>
@@ -46,12 +50,12 @@ function CustomTableRow({ data }) {
         <TableCell colSpan={2}>
           <div className="flex justify-around">
             <button
-              onClick={() => setOpen(!open)}
+              onClick={() => openCollapse('view')}
               className=" bg-fini-blue text-white p-1 rounded-lg hover:bg-fini-blue focus:outline-none focus:ring-2"
             >
               View
             </button>
-            <button className="text-white p-1 bg-green-700 rounded-lg hover:bg-green-900 focus:outline-none focus:ring-2">
+            <button onClick={() => openCollapse('detail')} className="text-white p-1 bg-green-700 rounded-lg hover:bg-green-900 focus:outline-none focus:ring-2">
               Details
             </button>
           </div>
@@ -59,7 +63,7 @@ function CustomTableRow({ data }) {
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={14}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
+          <Collapse in={viewCollapse} timeout="auto" unmountOnExit>
             <div className="p-6  m-auto max-w-xl" >
               {data.messageHistory.map(
                 (entry, index) =>
@@ -87,6 +91,20 @@ function CustomTableRow({ data }) {
               )}
   
             </div>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+
+      <TableRow colSpan={14}>
+      <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={14}>
+          <Collapse in={detailCollapse} timeout="auto" unmountOnExit>
+            <ul className="m-auto max-w-xl">
+              <li>
+                Created At: {epochToHumanRead(data.createdAt)}
+              </li>
+              <li>Source: {data.source}</li>
+              <li>Bot Name: {data.botName}</li>
+              </ul>          
           </Collapse>
         </TableCell>
       </TableRow>
