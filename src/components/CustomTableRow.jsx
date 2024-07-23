@@ -17,7 +17,6 @@ import {
 } from "@mui/material";
 import moment from "moment";
 import { EventRounded, KeyboardArrowDown, KeyboardArrowUp, TroubleshootOutlined } from "@mui/icons-material";
-import {setCurrentConversation } from '../store/questionSlice'
 
 function CustomTableRow({ data }) {
   const { chatHistory } = useSelector((state) => state.question);

@@ -26,6 +26,11 @@ function SearchBar() {
     setLocalQuestion('');
   };
 
+
+  const clearLastChat = () => {
+    setModalOpen(false)
+  }
+
   useEffect(() => {
     if (!latestResponse) return;
 
@@ -74,7 +79,7 @@ function SearchBar() {
         onSubmit={handleQuestionSubmit}
         chatHistory={chatHistory}
         displayedResponse={displayedResponse}
-        onClose={() => setModalOpen(false)}
+        onClose={() => clearLastChat()}
       />
     </div>
   );
