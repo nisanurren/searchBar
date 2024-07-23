@@ -35,7 +35,8 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
     }
   }, [chatHistory]);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (!question.trim()) return;
     
     const updatedChatHistory = [
@@ -75,32 +76,34 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
                   key={index}
                   className={`flex mb-2 ${entry.role === "user" ? "justify-end" : "justify-start"}`}
                 >
-                  <div className={`rounded-lg text-left ${entry.role === "user" ? "bg-fini-blue text-white" : "bg-white text-black border border-fini-blue"} p-2 rounded`}>                  
+                  <div className={`rounded-lg text-left  ${entry.role === "user" ? "bg-fini-blue text-white" : "bg-white text-black border border-fini-blue"} p-2 rounded`}>                  
                     {entry.role === "user" ? entry.content : index < chatHistory.length - 1 ? entry.content : entry.content}
                   </div>
                 </div>
               )
             ))}
           </div>
-          <div className="mb-4">
-            <input
-              ref={inputRef} 
-              type="text"
-              id="question"
-              className="w-full p-3 h-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Ask anything..."
-              value={question}
-              onChange={onQuestionChange}
-            />
-          </div>
-          <div className="w-full">
-            <button
-              onClick={handleSubmit}
-              className="w-full h-12 bg-fini-blue text-white px-4 py-2 rounded-lg hover:bg-fini-blue focus:outline-none focus:ring-2"
-            >
-              Submit
-            </button>
-          </div>
+          <form onSubmit={handleSubmit} action="submit">
+            <div className="mb-4">
+              <input
+                ref={inputRef} 
+                type="text"
+                id="question"
+                className="w-full p-3 h-14 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Ask anything..."
+                value={question}
+                onChange={onQuestionChange}
+              />
+            </div>
+            <div className="w-full">
+              <button
+                type='submit'
+                className="w-full h-14 bg-fini-blue text-white px-4 py-2 rounded-lg hover:bg-fini-blue focus:outline-none focus:ring-2"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import SearchBar from '../components/SearchBar'
 
 function HelpCenter() {

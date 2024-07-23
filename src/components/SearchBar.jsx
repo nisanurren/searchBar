@@ -6,9 +6,11 @@ import SearchModal from '../components/SearchModal';
 import { LocalHospital } from "@mui/icons-material";
 import History from './History'
 import {getConversationById} from '../utils/conversationManage'
+import { useOutletContext } from 'react-router-dom';
 
 function SearchBar() {
   const [question, setLocalQuestion] = useState("");
+  const { openingChat, setOpeningChat } = useOutletContext();
   const { chatHistory, latestResponse, status, error } = useSelector((state) => state.question);
 
   const [session, setSession] = useState('');
@@ -29,6 +31,20 @@ function SearchBar() {
     setLocalQuestion('');
   };
 
+  const openingChatTo=(a)=>{
+    const selectedChatHistory = getConversationById(a)
+    console.log(selectedChatHistory);
+    setSession(selectedChatHistory);
+    setModalOpen(true)
+  }
+
+  useEffect(() => {
+
+    if (openingChat.length) {
+        openingChatTo(openingChat);
+        setOpeningChat('')
+    }
+}, [openingChat]);
 
   const clearLastChat = () => {
     setSession('')
@@ -95,7 +111,6 @@ function SearchBar() {
         onClose={() => clearLastChat()}
       />
 
-      <History onHistoryItemClick={openSelectedChat}></History>
     </div>
   );
 }

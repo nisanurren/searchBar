@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
+import History from "./History";
 
-
-function SideBar() {
+function SideBar({clickedChat}) {
   const { pathname } = window?.location;
   const navigate = useNavigate();
 
@@ -17,14 +17,27 @@ function SideBar() {
     }
   };
 
-  const sidebarItems = [{path: '/', label: 'Home'}, {path: '/history', label: 'History'}]
+  const handleItemClick = (id) => {
+    console.log("Selected item ID:", id);
+    clickedChat(id)
+  };
+
+  const sidebarItems = [
+    { path: "/", label: "Home" },
+    { path: "/history", label: "History" },
+  ];
 
   return (
-    <div className="p-8 h-screen" style={{ minWidth: "260px" }}>
+    <div className="p-8" style={{ minWidth: "260px" }}>
       <div className="flex pb-4 justify-center">
         <img src={"/fini-logo.png"} className="mr-4" style={{ height: 40 }} />
       </div>
-      <ul className="mt-5">
+
+      <div className="mt-5">
+        <History clickedItem={handleItemClick}></History>
+      </div>
+
+      {/* <ul className="mt-5">
         {sidebarItems.map(
           (item, index) => (
             <li
@@ -38,10 +51,9 @@ function SideBar() {
             </li>
           )
         )}
-      </ul>
+      </ul> */}
     </div>
   );
 }
-
 
 export default SideBar;

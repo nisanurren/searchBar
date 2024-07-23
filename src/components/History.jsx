@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getConversations } from "../utils/conversationManage";
 
-function History({ onHistoryItemClick }) {
+function History({ clickedItem }) {
   const [conversations, setConversations] = useState([]);
 
   useEffect(() => {
@@ -9,17 +9,23 @@ function History({ onHistoryItemClick }) {
     setConversations(fetchedConversations);
   }, []);
 
+  const truncateContent = (content, maxLength) => {
+    if (content.length > maxLength) {
+      return content.slice(0, maxLength) + '...';
+    }
+    return content;
+  };
   return (
-    <div style={{ maxWidth: "260px" }} className="p-8 h-screen text-left">
+    <div style={{ maxWidth: "260px" }} className="p-8 pl-4 text-left">
       <div className="text-gray-600 p-3">Latest Chats:</div>
       <ul>
         {conversations.map((item) => (
           <li
             key={item.id}
-            onClick={() => onHistoryItemClick(item.id)}
-            className="text-gray-400 p-3 hover:bg-fini-blue hover:text-white rounded-xl hover:rounded-xl`}"
+            onClick={() =>(clickedItem(item.id))}
+            className="cursor-pointer text-gray-400 p-3 hover:bg-fini-blue hover:text-white rounded-xl hover:rounded-xl`}"
           >
-            {item.conversation[0].content}
+            {truncateContent(item.conversation[0].content, 15)}
           </li>
         ))}
       </ul>
