@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import {epochToHumanRead} from "../utils/utilFunctions"
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 import {
   Table,
   TableBody,
@@ -14,12 +16,17 @@ import {
   Typography,
 } from "@mui/material";
 import moment from "moment";
-import { KeyboardArrowDown, KeyboardArrowUp, TroubleshootOutlined } from "@mui/icons-material";
+import { EventRounded, KeyboardArrowDown, KeyboardArrowUp, TroubleshootOutlined } from "@mui/icons-material";
+import {setCurrentConversation } from '../store/questionSlice'
 
 function CustomTableRow({ data }) {
+  const { chatHistory } = useSelector((state) => state.question);
   const [open, setOpen] = useState(false);
   const [detailCollapse, setDetailCollapse] = useState(false)
   const [viewCollapse, setViewCollapse] = useState(false)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const openCollapse=(type)=>{
     if (type === 'detail'){
       setDetailCollapse(!detailCollapse)
@@ -28,12 +35,16 @@ function CustomTableRow({ data }) {
     }
   }
 
+  const continueToConversation=(chatHistory)=>{
+
+  }
+
   return (
     <>
       <TableRow>
         <TableCell colSpan={2} className="text-white">
           <div
-            className={`p-2 rounded-md uppercase text-center bg-green-700 text-white`}
+            className={`p-1 rounded-md uppercase text-xs text-center bg-fini-blue text-white`}
           >
             {data.source}
           </div>{" "}
@@ -51,12 +62,15 @@ function CustomTableRow({ data }) {
           <div className="flex justify-around">
             <button
               onClick={() => openCollapse('view')}
-              className=" bg-fini-blue text-white p-1 rounded-lg hover:bg-fini-blue focus:outline-none focus:ring-2"
+              className={`focus:outline-none p-1 rounded-lg ${viewCollapse ? 'bg-fini-blue text-white border-fini-blue' :  'bg-white border border-fini-blue text-fini-blue '}`}
             >
               View
             </button>
-            <button onClick={() => openCollapse('detail')} className="text-white p-1 bg-green-700 rounded-lg hover:bg-green-900 focus:outline-none focus:ring-2">
+            <button onClick={() => openCollapse('detail')} className={`focus:outline-none p-1 rounded-lg ${detailCollapse ? 'bg-fini-blue text-white border-fini-blue' :  'bg-white border border-fini-blue text-fini-blue'}`}>
               Details
+            </button>
+            <button onClick={() => continueToConversation(data.messageHistory)} className={`focus:outline-none p-1 rounded-lg ${detailCollapse ? 'bg-green-600 text-white border-fini-blue' :  'bg-white border border-green-600 text-green-600'}`}>
+              Continue
             </button>
           </div>
         </TableCell>
@@ -78,7 +92,7 @@ function CustomTableRow({ data }) {
                         className={`rounded-lg text-left ${
                           entry.role === "user"
                             ? "bg-fini-blue text-white"
-                            : "bg-gray-300 text-black"
+                            : "bg-white text-black border border-fini-blue"
                         } p-2 rounded`}
                       >
                         <strong>
@@ -98,13 +112,15 @@ function CustomTableRow({ data }) {
       <TableRow colSpan={14}>
       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={14}>
           <Collapse in={detailCollapse} timeout="auto" unmountOnExit>
-            <ul className="m-auto max-w-xl">
+            <div className="p-6">
+            <ul className="p-6 rounded-md border border-fini-blue m-auto max-w-xl">
               <li>
-                Created At: {epochToHumanRead(data.createdAt)}
+                <span className="font-semibold">Created At:</span> {epochToHumanRead(data.createdAt)}
               </li>
-              <li>Source: {data.source}</li>
-              <li>Bot Name: {data.botName}</li>
-              </ul>          
+              <li> <span className="font-semibold">Source:</span> {data.source}</li>
+              <li> <span className="font-semibold">Botname:</span> {data.botName}</li>
+              </ul>  
+            </div>        
           </Collapse>
         </TableCell>
       </TableRow>

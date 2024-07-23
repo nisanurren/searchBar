@@ -31,6 +31,10 @@ const questionSlice = createSlice({
         setQuestion: (state, action) => {
             state.chatHistory.push({ role: 'user', content: action.payload })
         },
+
+        setCurrentConversation: (state, action) => {
+            state.chatHistory = action.payload
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -51,5 +55,5 @@ const questionSlice = createSlice({
 });
 
 
-export const { setQuestion } = questionSlice.actions;
+export const { setQuestion, setCurrentConversation } = questionSlice.actions;
 export default questionSlice.reducer;

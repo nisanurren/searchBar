@@ -19,7 +19,6 @@ function HistoryTable({ history }) {
   return (
     <div className="w-full max-w-screen-lg m-auto"> 
       <TableContainer         sx={{
-          bgcolor: 'gradient-custom',
           minWidth: 500,
         }} component={Paper}>
         <Table>

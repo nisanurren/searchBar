@@ -6,8 +6,8 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-      <div className="bg-gradient-custom  w-full max-w-2xl rounded-lg shadow-lg relative">
-          <div className="p-6 rounded-xl bg-white bg-opacity-10">
+      <div className="w-full max-w-2xl rounded-lg shadow-lg relative">
+          <div className="p-6 rounded-xl bg-white">
           <div className="flex justify-between items-center mb-4">
           <button
             onClick={onClose}
@@ -23,7 +23,11 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
                 key={index}
                 className={`flex mb-2 ${entry.role === "user" ? "justify-end" : "justify-start"}`}
               >
-                <div className={`rounded-lg text-left ${entry.role === "user" ? "bg-fini-blue text-white" : "bg-gray-300 text-black"} p-2 rounded`}>
+                <div          className={`rounded-lg text-left ${
+                          entry.role === "user"
+                            ? "bg-fini-blue text-white"
+                            : "bg-white text-black border border-fini-blue"
+                        } p-2 rounded`}>
                   <strong>{entry.role === "user" ? "You" : "Bot"}:</strong>{" "}
                   {entry.role === "user"
                     ? entry.content
@@ -40,7 +44,7 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
             type="text"
             id="question"
             className="w-full p-3 h-12  border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Ask anything..."
+            placeholder="Ask anything"
             value={question}
             onChange={onQuestionChange}
           />

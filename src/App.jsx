@@ -25,7 +25,7 @@ function App() {
   return (
     <div>
       <AppContext.Provider value={providerState}>
-        <div className='bg-gradient-custom'>
+        <div className='bg-white'>
           <Router>
               <Routes>
                 <Route path="/login" element={<LoginPage />} />

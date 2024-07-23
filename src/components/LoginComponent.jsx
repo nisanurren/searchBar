@@ -32,8 +32,8 @@ const login = (e) =>{
 }
 
   return (
-    <div className="min-h-screen flex items-center  w-full justify-center bg-gradient-custom">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-sm">
+    <div className="min-h-screen flex items-center  w-full justify-center">
+      <div className="bg-white p-8 rounded w-full max-w-sm">
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
 
         <form action="submit" onSubmit={login}>
