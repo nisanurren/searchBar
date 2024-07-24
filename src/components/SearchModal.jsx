@@ -79,7 +79,6 @@ const SearchModal = ({
       question,
       conversation: updatedChatHistory,
     };
-    console.log("Updating conversation:", updatedConversation);
     saveConversation(updatedConversation);
     const fetchedConversations = getConversations();
     dispatch(setChats(fetchedConversations));

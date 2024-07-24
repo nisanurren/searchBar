@@ -13,9 +13,7 @@ const PrivateRoute = () => {
     }
 
     const clickedChat = (a) => {
-        console.log(a);
         setOpeningChat(a);
-        console.log(openingChat);
     };
     return (
         <div className="flex h-full">

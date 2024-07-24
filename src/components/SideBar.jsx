@@ -22,7 +22,6 @@ function SideBar({ clickedChat }) {
   };
 
   const handleItemClick = (id) => {
-    console.log("Selected item ID:", id);
     clickedChat(id);
   };
 
