@@ -1,13 +1,11 @@
 import React from "react";
-import { TextField, Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setApiKey, setToken } from "../store/userSlice";
+import { setToken } from "../store/userSlice";
 import { GoogleLogin } from "@react-oauth/google";
 
 const LoginComponent = () => {
-  const [apiKey, setApiKeyLocal] = useState("");
   const tokenFromStore = useSelector((state) => state.user.token);
 
   const dispatch = useDispatch();
@@ -18,17 +16,6 @@ const LoginComponent = () => {
       navigate("/");
     }
   }, [tokenFromStore, navigate]);
-
-  const handleApiKey = (e) => {
-    setApiKeyLocal(e.target.value);
-  };
-
-  const login = (e) => {
-    e.preventDefault();
-    console.log(apiKey);
-    dispatch(setApiKey(apiKey));
-    navigate("/");
-  };
 
   const handleSuccess = (response) => {
     console.log("Login successful:", response);
