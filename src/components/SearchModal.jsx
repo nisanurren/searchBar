@@ -8,6 +8,8 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
   const dispatch = useDispatch();
   const [conversationId, setConversationId] = useState('');
   const inputRef = useRef(null);
+  const containerRef = useRef(null);
+
 
   useEffect(() => {
     if (open) {
@@ -32,6 +34,9 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
     if (chatHistory.length && conversationId) {
       const updatedConversation = { id: conversationId, question, conversation: chatHistory };
       saveConversation(updatedConversation);  // Save the current chat
+    }
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
   }, [chatHistory]);
 
@@ -69,14 +74,14 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
               <CloseIcon />
             </button>
           </div>
-          <div className="mb-4 max-h-60 overflow-y-auto">
+          <div ref={containerRef} className="mb-4 max-h-90 overflow-y-auto">
             {chatHistory.map((entry, index) => (
               entry.role !== 'system' && (
                 <div
                   key={index}
-                  className={`flex mb-2 ${entry.role === "user" ? "justify-end" : "justify-start"}`}
+                  className={`flex mb-2 transition-transform duration-500 ease-in-out ${entry.role === "user" ? "justify-end" : "justify-start"}`}
                 >
-                  <div className={`rounded-lg text-left  ${entry.role === "user" ? "bg-fini-blue text-white" : "bg-white text-black border border-fini-blue"} p-2 rounded`}>                  
+                  <div className={`rounded-lg text-left  ${entry.role === "user" ? "bg-fini-blue text-white animate-fadeIn" : "bg-white text-black border border-fini-blue animate-fadeIn"} p-2 rounded`}>                  
                     {entry.role === "user" ? entry.content : index < chatHistory.length - 1 ? entry.content : entry.content}
                   </div>
                 </div>
