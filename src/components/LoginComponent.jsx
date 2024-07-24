@@ -1,58 +1,55 @@
-import React from 'react';
-import { TextField, Button} from "@mui/material";
+import React from "react";
+import { TextField, Button } from "@mui/material";
 import { useState, useEffect } from "react";
-import { useDispatch,useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { setApiKey } from '../store/userSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setApiKey, setToken } from "../store/userSlice";
+import { GoogleLogin } from "@react-oauth/google";
 
 const LoginComponent = () => {
+  const [apiKey, setApiKeyLocal] = useState("");
+  const tokenFromStore = useSelector((state) => state.user.token);
 
-const [apiKey, setApiKeyLocal] = useState('');
-const apiKeyFromStore = useSelector((state) => state.user.apiKey);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-const dispatch = useDispatch();
-const navigate = useNavigate();
+  useEffect(() => {
+    if (tokenFromStore) {
+      navigate("/");
+    }
+  }, [tokenFromStore, navigate]);
 
-useEffect(() => {
-  if (apiKeyFromStore) {
-    navigate('/');
-  }
-}, [apiKeyFromStore, navigate]);
+  const handleApiKey = (e) => {
+    setApiKeyLocal(e.target.value);
+  };
 
+  const login = (e) => {
+    e.preventDefault();
+    console.log(apiKey);
+    dispatch(setApiKey(apiKey));
+    navigate("/");
+  };
 
-const handleApiKey = (e) => {
-  setApiKeyLocal(e.target.value);
-};
+  const handleSuccess = (response) => {
+    console.log("Login successful:", response);
+    const token = response.credential;
+    dispatch(setToken(token));
+  };
 
-const login = (e) =>{
-  e.preventDefault();
-  console.log(apiKey);
-  dispatch(setApiKey(apiKey));
-  navigate('/');
-}
+  const handleFailure = (error) => {
+    console.error("Login failed:", error);
+  };
 
   return (
     <div className="min-h-screen flex items-center  w-full justify-center">
       <div className="bg-white p-8 rounded w-full max-w-sm">
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
 
-        <form action="submit" onSubmit={login}>
-
-        <TextField value={apiKey}  onChange={handleApiKey} className="w-full" id="outlined-basic" label="Credential" variant="outlined" />
-
-        <Button     sx={{
-        width: '100%',
-        marginTop: '0.5rem',
-        backgroundColor: '#0052cc', // Tailwind color slate-200
-        '&:hover': {
-          backgroundColor: '#023075', 
-        },
-      }} type="submit" className="w-full mt-2 bg-slate-200 rounded" variant="contained">Login</Button>
-
-
-        </form>
-
-   
+        <GoogleLogin
+          onSuccess={handleSuccess}
+          onFailure={handleFailure}
+          onError={handleFailure}
+        />
       </div>
     </div>
   );

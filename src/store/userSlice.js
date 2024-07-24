@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 
 const initialState = {
-    apiKey: localStorage.getItem('apiKey') || ''
+    apiKey: localStorage.getItem('apiKey') || '',
+    token: localStorage.getItem('token') || ''
 };
 const userSlice = createSlice({
     name: 'user',
@@ -12,13 +13,18 @@ const userSlice = createSlice({
             state.apiKey = action.payload;
             localStorage.setItem('apiKey', action.payload);
         },
-        clearApiKey: (state) => {
-            state.apiKey = '';
-            localStorage.removeItem('apiKey');
+
+        setToken: (state, action) => {
+            state.token = action.payload
+            localStorage.setItem('token', action.payload);
+        },
+        clearToken: (state) => {
+            state.token = ''
+            localStorage.removeItem('token');
         },
     },
 });
 
 
-export const { setApiKey, clearApiKey } = userSlice.actions;
+export const { setApiKey, clearToken, setToken } = userSlice.actions;
 export default userSlice.reducer;

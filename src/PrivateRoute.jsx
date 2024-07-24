@@ -6,8 +6,9 @@ import { useSelector } from 'react-redux';
 const PrivateRoute = () => {
     const [openingChat, setOpeningChat] = useState(false);
 
-    const apiKey = useSelector((state) => state.user.apiKey);
-    if (!apiKey) {
+    //const apiKey = useSelector((state) => state.user.apiKey);
+    const token = useSelector((state) => state.user.token);
+    if (!token) {
         return <Navigate to="/login" replace />;
     }
 

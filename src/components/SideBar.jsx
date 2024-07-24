@@ -1,10 +1,13 @@
 import { useNavigate } from "react-router";
 import LogoutIcon from "@mui/icons-material/Logout";
 import History from "./History";
+import { useDispatch } from "react-redux";
+import { clearToken } from "../store/userSlice";
 
 function SideBar({ clickedChat }) {
   const { pathname } = window?.location;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onClick = (path) => {
     navigate(path);
@@ -23,10 +26,10 @@ function SideBar({ clickedChat }) {
     clickedChat(id);
   };
 
-  const sidebarItems = [
-    { path: "/", label: "Home" },
-    { path: "/history", label: "History" },
-  ];
+  const logout=()=>{
+    dispatch(clearToken())
+    navigate('/login');
+  }
 
   return (
     <div className="p-8 border-r shadow-lg" style={{ minWidth: "260px" }}>
@@ -39,18 +42,16 @@ function SideBar({ clickedChat }) {
       </div>
 
       <button
-      style={{ maxWidth: "260px" }} 
+        onClick={logout}
+        style={{ maxWidth: "260px" }}
         type="button"
         className=" absolute bottom-10 p-3 rounded-xl left-10 text-gray-700 bg-transparent border-none cursor-pointer hover:bg-gray-100"
       >
         <div className="flex w-full">
-
           <LogoutIcon></LogoutIcon>
           <div className="pl-1">Signout</div>
         </div>
       </button>
-
-     
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import axios from "axios";
+import.meta.env.VITE_API_KEY
 
 //const headers = {
 //   Authorization: 'Bearer ' + apiKey,
@@ -13,7 +14,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
     (config) => {
 
-        const apiKey = localStorage.getItem('apiKey')
+        const apiKey = import.meta.env.VITE_API_KEY
 
 
         if (apiKey) {
