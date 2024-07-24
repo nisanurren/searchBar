@@ -49,6 +49,43 @@ const SearchModal = ({
     }
   }, [open, dispatch]);
 
+  const urlRegex = /(https?:\/\/[^\s\[\]()]+(?:[^\s\[\]()]*))/g;
+
+  const formatText = (text) => {
+    const lines = text.split("\n");
+
+    return lines.map((line, lineIndex) => {
+      const parts = line.split(urlRegex);
+      const urls = line.match(urlRegex) || [];
+
+      return (
+        <React.Fragment key={lineIndex}>
+          {parts.map((part, partIndex) => {
+            const cleanPart = part.replace(/[^\S\r\n]+$/, "");
+
+            return (
+              <React.Fragment key={partIndex}>
+                {urls.includes(part) ? (
+                  <a
+                    href={part.replace(/[^\S\r\n]+$/, "")}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-blue-500 text-white px-2 py-1 rounded ml-1"
+                  >
+                    Visit Link
+                  </a>
+                ) : (
+                  cleanPart
+                )}
+              </React.Fragment>
+            );
+          })}
+          {lineIndex < lines.length - 1 && <br />}
+        </React.Fragment>
+      );
+    });
+  };
+
   useEffect(() => {
     if (chatHistory.length && conversationId) {
       const updatedConversation = {
@@ -125,7 +162,7 @@ const SearchModal = ({
                         ""
                       )}
                       <div
-                        className={`rounded-lg text-left ${
+                        className={`rounded-lg text-left break-words ${
                           entry.role === "user"
                             ? "bg-gray-600 text-white animate-fadeIn"
                             : "bg-gray-100 text-black animate-fadeIn"
@@ -134,8 +171,8 @@ const SearchModal = ({
                         {entry.role === "user"
                           ? entry.content
                           : index < chatHistory.length - 1
-                          ? entry.content
-                          : entry.content}
+                          ? formatText(entry.content)
+                          : formatText(entry.content)}
                       </div>
                     </div>
                   </div>
