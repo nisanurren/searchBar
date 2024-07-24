@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router";
+import LogoutIcon from "@mui/icons-material/Logout";
 import History from "./History";
 
-function SideBar({clickedChat}) {
+function SideBar({ clickedChat }) {
   const { pathname } = window?.location;
   const navigate = useNavigate();
 
@@ -19,7 +20,7 @@ function SideBar({clickedChat}) {
 
   const handleItemClick = (id) => {
     console.log("Selected item ID:", id);
-    clickedChat(id)
+    clickedChat(id);
   };
 
   const sidebarItems = [
@@ -36,6 +37,17 @@ function SideBar({clickedChat}) {
       <div className="mt-5">
         <History clickedItem={handleItemClick}></History>
       </div>
+
+      <button
+        type="button"
+        className=" absolute bottom-10 p-2 rounded-md left-10 text-gray-700 bg-transparent border-none cursor-pointer hover:bg-gray-300"
+      >
+        <div className="flex">
+
+          <LogoutIcon></LogoutIcon>
+          <div className="pl-1">Signout</div>
+        </div>
+      </button>
 
       {/* <ul className="mt-5">
         {sidebarItems.map(

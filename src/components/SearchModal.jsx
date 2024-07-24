@@ -74,7 +74,7 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
               <CloseIcon />
             </button>
           </div>
-          <div ref={containerRef} className="mb-4 max-h-90 overflow-y-auto">
+          <div ref={containerRef} className="mb-4 max-h-80 overflow-y-auto">
             {chatHistory.map((entry, index) => (
               entry.role !== 'system' && (
                 <div
