@@ -21,7 +21,7 @@ function History({ clickedItem }) {
 
   return (
     <div style={{ maxWidth: "260px" }} className="p-8 pl-4 text-left rounded-lg">
-      <ul className="max-h-96 overflow-auto">
+      <ul className="max-h-96 overflow-auto py-1">
         {conversations.map((item) => (
           <li
             key={item.id}

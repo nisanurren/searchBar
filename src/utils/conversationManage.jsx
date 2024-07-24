@@ -10,7 +10,7 @@ export const getConversations = () => {
     if (index > -1) {
       conversations[index] = conversation; // Update current chat
     } else {
-      conversations.push(conversation); // Add new chat
+      conversations.unshift(conversation); //Add new chat to beginning of the array
     }
   
     localStorage.setItem('conversations', JSON.stringify(conversations));
