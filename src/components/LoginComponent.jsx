@@ -18,28 +18,36 @@ const LoginComponent = () => {
   }, [tokenFromStore, navigate]);
 
   const handleSuccess = (response) => {
-    console.log("Login successful:", response);
     const token = response.credential;
     dispatch(setToken(token));
   };
 
   const handleFailure = (error) => {
-    console.error("Login failed:", error);
+    return error
   };
 
   return (
-    <div className="min-h-screen flex items-center  w-full justify-center">
-      <div className="bg-white p-8 rounded w-full max-w-sm">
-        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-sm">
+      <p className="text-center mb-6 text-gray-600">
+        Welcome! Please login to your account.
+      </p>
+      <div className="flex justify-center">
         <GoogleLogin
           onSuccess={handleSuccess}
           onFailure={handleFailure}
           onError={handleFailure}
+          size="large"
+          shape="pill"
+          width="250"
+          ux_mode="popup"
+          theme="filled_blue"
+          text="signin_with"
         />
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default LoginComponent;
