@@ -3,6 +3,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { getConversations, saveConversation, getConversationById } from '../utils/conversationManage';
 import { useSelector, useDispatch } from "react-redux";
 import { askQuestionToChatBot, setQuestion, setCurrentConversation } from '../store/questionSlice';
+import SendIcon from '@mui/icons-material/Send';
 import { setChats } from '../store/previousChatSlice';
 
 const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, session, displayedResponse, onClose }) => {
@@ -99,7 +100,8 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
             </div>
           )}
           <form onSubmit={handleSubmit} action="submit">
-            <div className="mb-4">
+            
+            <div className="relative mb-4">
               <input
                 ref={inputRef} 
                 type="text"
@@ -109,14 +111,13 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
                 value={question}
                 onChange={onQuestionChange}
               />
-            </div>
-            <div className="w-full">
               <button
-                type='submit'
-                className="w-full h-14 bg-fini-blue text-white px-4 py-2 rounded-lg hover:bg-fini-blue focus:outline-none focus:ring-2"
-              >
-                Submit
-              </button>
+              type="submit"
+              className="absolute inset-y-0 right-0 px-4 text-[#ccdae7] bg-transparent border-none cursor-pointer"
+              onClick={() => setModalOpen(true)}
+            >
+              <SendIcon />
+            </button>
             </div>
           </form>
         </div>
