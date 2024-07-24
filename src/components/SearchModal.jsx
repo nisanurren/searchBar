@@ -117,7 +117,6 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
               <button
               type="submit"
               className="absolute inset-y-0 right-0 px-4 text-[#ccdae7] bg-transparent border-none cursor-pointer"
-              onClick={() => setModalOpen(true)}
             >
               <SendIcon />
             </button>
