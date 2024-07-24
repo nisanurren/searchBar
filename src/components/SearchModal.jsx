@@ -1,41 +1,62 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
 import CloseIcon from "@mui/icons-material/Close";
-import { getConversations, saveConversation, getConversationById } from '../utils/conversationManage';
+import {
+  getConversations,
+  saveConversation,
+  getConversationById,
+} from "../utils/conversationManage";
 import { useSelector, useDispatch } from "react-redux";
-import { askQuestionToChatBot, setQuestion, setCurrentConversation } from '../store/questionSlice';
-import SendIcon from '@mui/icons-material/Send';
-import { setChats } from '../store/previousChatSlice';
+import {
+  askQuestionToChatBot,
+  setQuestion,
+  setCurrentConversation,
+} from "../store/questionSlice";
+import SendIcon from "@mui/icons-material/Send";
+import { setChats } from "../store/previousChatSlice";
 
-const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, session, displayedResponse, onClose }) => {
+const SearchModal = ({
+  open,
+  question,
+  onQuestionChange,
+  onSubmit,
+  chatHistory,
+  session,
+  displayedResponse,
+  onClose,
+}) => {
   const dispatch = useDispatch();
-  const [conversationId, setConversationId] = useState('');
+  const [conversationId, setConversationId] = useState("");
   const inputRef = useRef(null);
   const containerRef = useRef(null);
   const status = useSelector((state) => state.question.status);
 
   useEffect(() => {
     if (open) {
-
       if (inputRef.current) {
         inputRef.current.focus();
       }
-      let conversationID = ''
-      if(!session){
-        conversationID = 'conv_' + new Date().getTime();
+      let conversationID = "";
+      if (!session) {
+        conversationID = "conv_" + new Date().getTime();
         dispatch(setCurrentConversation([]));
       } else {
-        conversationID = session.id
+        conversationID = session.id;
         dispatch(setCurrentConversation(session.conversation));
       }
-       // Clear current chat
-      setConversationId(conversationID);  // Start new chat
+      // Clear current chat
+      setConversationId(conversationID); // Start new chat
     }
   }, [open, dispatch]);
 
   useEffect(() => {
     if (chatHistory.length && conversationId) {
-      const updatedConversation = { id: conversationId, question, conversation: chatHistory };
-      saveConversation(updatedConversation);  // Save the current chat
+      const updatedConversation = {
+        id: conversationId,
+        question,
+        conversation: chatHistory,
+      };
+      saveConversation(updatedConversation); // Save the current chat
       const fetchedConversations = getConversations();
       dispatch(setChats(fetchedConversations));
     }
@@ -47,14 +68,18 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!question.trim()) return;
-    
+
     const updatedChatHistory = [
       ...chatHistory,
-      { role: 'user', content: question },
-      { role: 'assistant', content: displayedResponse }
+      { role: "user", content: question },
+      { role: "assistant", content: displayedResponse },
     ];
-    const updatedConversation = { id: conversationId, question, conversation: updatedChatHistory };
-    console.log('Updating conversation:', updatedConversation);
+    const updatedConversation = {
+      id: conversationId,
+      question,
+      conversation: updatedChatHistory,
+    };
+    console.log("Updating conversation:", updatedConversation);
     saveConversation(updatedConversation);
     const fetchedConversations = getConversations();
     dispatch(setChats(fetchedConversations));
@@ -72,7 +97,7 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
             <button
               onClick={() => {
                 dispatch(setCurrentConversation([]));
-                setConversationId('');
+                setConversationId("");
                 onClose();
               }}
               className="text-gray-400 hover:text-gray-600 focus:outline-none"
@@ -81,32 +106,61 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
             </button>
           </div>
           <div ref={containerRef} className="mb-4 max-h-80 overflow-y-auto">
-            {chatHistory.map((entry, index) => (
-              entry.role !== 'system' && (
-                <div
-                  key={index}
-                  className={`flex mb-4 transition-transform duration-500 ease-in-out ${entry.role === "user" ? "justify-end" : "justify-start"}`}
-                >
-                  <div className="flex">
-                   {entry.role === 'assistant' ?  <img className="w-3 h-3 mt-2 mr-5" src="./fini-icon.png" alt="" /> :''}
-                  <div className={`rounded-lg text-left ${entry.role === "user" ? "bg-gray-600 text-white animate-fadeIn" : "bg-gray-100 text-black animate-fadeIn"} p-2 rounded`}>
-                    {entry.role === "user" ? entry.content : index < chatHistory.length - 1 ? entry.content : entry.content}
+            {chatHistory.map(
+              (entry, index) =>
+                entry.role !== "system" && (
+                  <div
+                    key={index}
+                    className={`flex mb-4 transition-transform duration-500 ease-in-out ${
+                      entry.role === "user" ? "justify-end" : "justify-start"
+                    }`}
+                  >
+                    <div className="flex">
+                      {entry.role === "assistant" ? (
+                        <img
+                          className="w-3 h-3 mt-2 mr-5"
+                          src="./fini-icon.png"
+                          alt=""
+                        />
+                      ) : (
+                        ""
+                      )}
+                      <div
+                        className={`rounded-lg text-left ${
+                          entry.role === "user"
+                            ? "bg-gray-600 text-white animate-fadeIn"
+                            : "bg-gray-100 text-black animate-fadeIn"
+                        } p-2 rounded`}
+                      >
+                        {entry.role === "user"
+                          ? entry.content
+                          : index < chatHistory.length - 1
+                          ? entry.content
+                          : entry.content}
+                      </div>
+                    </div>
                   </div>
-                  </div>
-                </div>
-              )
-            ))}
+                )
+            )}
           </div>
-          {status === 'loading' && (
-            <div className="flex justify-center items-center mb-4">
-              <div className="loader">Loading...</div>
+          {status === "loading" && (
+            <div className="flex justify-start items-left mb-4">
+              <div className="mb-4 flex">
+                <img
+                  className="w-3 h-3 mt-2 mr-5"
+                  src="./fini-icon.png"
+                  alt=""
+                />
+                <div className="rounded-lg text-left bg-gray-100 text-black animate-fadeIn p-2 rounded">
+                  <CircularProgress size={20} />
+                </div>
+              </div>
             </div>
           )}
           <form onSubmit={handleSubmit} action="submit">
-            
             <div className="relative mb-4">
               <input
-                ref={inputRef} 
+                ref={inputRef}
                 type="text"
                 id="question"
                 className="w-full p-3 h-14 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -115,11 +169,11 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
                 onChange={onQuestionChange}
               />
               <button
-              type="submit"
-              className="absolute inset-y-0 right-0 px-4 text-[#ccdae7] bg-transparent border-none cursor-pointer"
-            >
-              <SendIcon />
-            </button>
+                type="submit"
+                className="absolute inset-y-0 right-0 px-4 text-[#ccdae7] bg-transparent border-none cursor-pointer"
+              >
+                <SendIcon />
+              </button>
             </div>
           </form>
         </div>
