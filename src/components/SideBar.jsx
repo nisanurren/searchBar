@@ -29,7 +29,7 @@ function SideBar({ clickedChat }) {
   ];
 
   return (
-    <div className="p-8" style={{ minWidth: "260px" }}>
+    <div className="p-8 border-r shadow-lg" style={{ minWidth: "260px" }}>
       <div className="flex pb-4 justify-center">
         <img src={"/fini-logo.png"} className="mr-4" style={{ height: 40 }} />
       </div>
@@ -39,10 +39,11 @@ function SideBar({ clickedChat }) {
       </div>
 
       <button
+      style={{ maxWidth: "260px" }} 
         type="button"
-        className=" absolute bottom-10 p-2 rounded-md left-10 text-gray-700 bg-transparent border-none cursor-pointer hover:bg-gray-300"
+        className=" absolute bottom-10 p-3 rounded-xl left-10 text-gray-700 bg-transparent border-none cursor-pointer hover:bg-gray-100"
       >
-        <div className="flex">
+        <div className="flex w-full">
 
           <LogoutIcon></LogoutIcon>
           <div className="pl-1">Signout</div>

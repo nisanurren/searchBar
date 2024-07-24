@@ -85,10 +85,13 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
               entry.role !== 'system' && (
                 <div
                   key={index}
-                  className={`flex mb-2 transition-transform duration-500 ease-in-out ${entry.role === "user" ? "justify-end" : "justify-start"}`}
+                  className={`flex mb-4 transition-transform duration-500 ease-in-out ${entry.role === "user" ? "justify-end" : "justify-start"}`}
                 >
-                  <div className={`rounded-lg text-left ${entry.role === "user" ? "bg-fini-blue text-white animate-fadeIn" : "bg-white text-black border border-fini-blue animate-fadeIn"} p-2 rounded`}>
+                  <div className="flex">
+                   {entry.role === 'assistant' ?  <img className="w-3 h-3 mt-2 mr-5" src="./fini-icon.png" alt="" /> :''}
+                  <div className={`rounded-lg text-left ${entry.role === "user" ? "bg-gray-600 text-white animate-fadeIn" : "bg-gray-100 text-black animate-fadeIn"} p-2 rounded`}>
                     {entry.role === "user" ? entry.content : index < chatHistory.length - 1 ? entry.content : entry.content}
+                  </div>
                   </div>
                 </div>
               )

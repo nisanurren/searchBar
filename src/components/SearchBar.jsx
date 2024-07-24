@@ -84,7 +84,7 @@ function SearchBar() {
             <input
               type="text"
               id="question"
-              className="w-full p-4 border h-14 border-[#ccdae7] rounded-xl text-[#ccdae7] bg-transparent focus:outline-none focus:ring-2 focus:ring-[#ccdae7]"
+              className="w-full p-4 border h-14 border-[#ccdae7] rounded-xl text-[#ccdae7] bg-transparent shadow-md focus:outline-none focus:ring-2 focus:ring-[#ccdae7]"
               placeholder="Ask anything..."
               onClick={() => setModalOpen(true)}
               readOnly
