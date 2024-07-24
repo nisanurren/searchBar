@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import CloseIcon from "@mui/icons-material/Close";
 import { getConversations, saveConversation, getConversationById } from '../utils/conversationManage';
 import { useSelector, useDispatch } from "react-redux";
-import { setCurrentConversation } from '../store/questionSlice';
+import { askQuestionToChatBot, setQuestion, setCurrentConversation } from '../store/questionSlice';
 import { setChats } from '../store/previousChatSlice';
 
 const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, session, displayedResponse, onClose }) => {
@@ -10,7 +10,7 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
   const [conversationId, setConversationId] = useState('');
   const inputRef = useRef(null);
   const containerRef = useRef(null);
-
+  const status = useSelector((state) => state.question.status);
 
   useEffect(() => {
     if (open) {
@@ -69,7 +69,7 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
         <div className="p-6 rounded-xl bg-white">
           <div className="flex justify-between items-center mb-4">
             <button
-              onClick={function(){
+              onClick={() => {
                 dispatch(setCurrentConversation([]));
                 setConversationId('');
                 onClose();
@@ -86,13 +86,18 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
                   key={index}
                   className={`flex mb-2 transition-transform duration-500 ease-in-out ${entry.role === "user" ? "justify-end" : "justify-start"}`}
                 >
-                  <div className={`rounded-lg text-left  ${entry.role === "user" ? "bg-fini-blue text-white animate-fadeIn" : "bg-white text-black border border-fini-blue animate-fadeIn"} p-2 rounded`}>                  
+                  <div className={`rounded-lg text-left ${entry.role === "user" ? "bg-fini-blue text-white animate-fadeIn" : "bg-white text-black border border-fini-blue animate-fadeIn"} p-2 rounded`}>
                     {entry.role === "user" ? entry.content : index < chatHistory.length - 1 ? entry.content : entry.content}
                   </div>
                 </div>
               )
             ))}
           </div>
+          {status === 'loading' && (
+            <div className="flex justify-center items-center mb-4">
+              <div className="loader">Loading...</div>
+            </div>
+          )}
           <form onSubmit={handleSubmit} action="submit">
             <div className="mb-4">
               <input

@@ -20,7 +20,7 @@ function History({ clickedItem }) {
   };
 
   return (
-    <div style={{ maxWidth: "260px" }} className="p-8 pl-4 text-left bg-gray-100 rounded-lg">
+    <div style={{ maxWidth: "260px" }} className="p-8 pl-4 text-left rounded-lg">
       <div className="text-gray-600 p-3">Latest Chats:</div>
       <ul className="max-h-96 overflow-auto">
         {conversations.map((item) => (

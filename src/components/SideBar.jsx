@@ -49,21 +49,7 @@ function SideBar({ clickedChat }) {
         </div>
       </button>
 
-      {/* <ul className="mt-5">
-        {sidebarItems.map(
-          (item, index) => (
-            <li
-              className={`mb-4 px-6 py-3 cursor-pointer text-center ${pathSelector(
-                item.path
-              )} hover:bg-fini-blue hover:text-white hover:rounded-xl`}
-              onClick={() => onClick(item.path)}
-              key={index}
-            >
-              {item.label}
-            </li>
-          )
-        )}
-      </ul> */}
+     
     </div>
   );
 }
