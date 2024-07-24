@@ -1,13 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getConversations } from "../utils/conversationManage";
+import { useSelector, useDispatch } from "react-redux";
+import { setChats } from '../store/previousChatSlice';
 
 function History({ clickedItem }) {
-  const [conversations, setConversations] = useState([]);
+  const dispatch = useDispatch();
+  const conversations = useSelector((state) => state.previousChats.conversations); // Access conversations from Redux store
 
   useEffect(() => {
     const fetchedConversations = getConversations();
-    setConversations(fetchedConversations);
-  }, []);
+    dispatch(setChats(fetchedConversations)); // Dispatch action to set conversations in Redux state
+  }, [dispatch]);
 
   const truncateContent = (content, maxLength) => {
     if (content.length > maxLength) {
@@ -15,17 +18,18 @@ function History({ clickedItem }) {
     }
     return content;
   };
+
   return (
-    <div style={{ maxWidth: "260px" }} className="p-8 pl-4 text-left">
+    <div style={{ maxWidth: "260px" }} className="p-8 pl-4 text-left bg-gray-100 rounded-lg">
       <div className="text-gray-600 p-3">Latest Chats:</div>
-      <ul className=" max-h-96 overflow-auto">
+      <ul className="max-h-96 overflow-auto">
         {conversations.map((item) => (
           <li
             key={item.id}
-            onClick={() =>(clickedItem(item.id))}
-            className="cursor-pointer text-gray-700 p-3 hover:bg-fini-blue hover:text-white rounded-xl hover:rounded-xl`}"
+            onClick={() => clickedItem(item.id)}
+            className="cursor-pointer text-gray-700 p-3 hover:bg-fini-blue hover:text-white rounded-xl"
           >
-            {truncateContent(item.conversation[0].content, 15)}
+            {truncateContent(item.conversation[0].content, 14)}
           </li>
         ))}
       </ul>

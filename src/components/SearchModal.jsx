@@ -3,6 +3,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { getConversations, saveConversation, getConversationById } from '../utils/conversationManage';
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentConversation } from '../store/questionSlice';
+import { setChats } from '../store/previousChatSlice';
 
 const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, session, displayedResponse, onClose }) => {
   const dispatch = useDispatch();
@@ -34,6 +35,8 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
     if (chatHistory.length && conversationId) {
       const updatedConversation = { id: conversationId, question, conversation: chatHistory };
       saveConversation(updatedConversation);  // Save the current chat
+      const fetchedConversations = getConversations();
+      dispatch(setChats(fetchedConversations));
     }
     if (containerRef.current) {
       containerRef.current.scrollTop = containerRef.current.scrollHeight;
@@ -52,6 +55,8 @@ const SearchModal = ({ open, question, onQuestionChange, onSubmit, chatHistory, 
     const updatedConversation = { id: conversationId, question, conversation: updatedChatHistory };
     console.log('Updating conversation:', updatedConversation);
     saveConversation(updatedConversation);
+    const fetchedConversations = getConversations();
+    dispatch(setChats(fetchedConversations));
 
     onSubmit();
   };
