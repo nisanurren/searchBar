@@ -28,7 +28,7 @@ function History({ clickedItem }) {
   }
 
   return (
-    <div style={{ maxWidth: "260px" }} className="p-8 pl-4 pr-2 text-left rounded-lg">
+    <div style={{ maxWidth: "260px" }} className="p-8 pl-1 pr-2 text-left rounded-lg">
       <ul className="max-h-96 overflow-auto py-1">
         {conversations.map((item) => (
           <li
@@ -36,7 +36,7 @@ function History({ clickedItem }) {
             className="flex justify-between items-center"
           >
            <div className="cursor-pointer text-gray-700 p-3 hover:bg-gray-100 hover:text-gray-600 rounded-xl w-full" onClick={() => clickedItem(item.id)}>
-           {truncateContent(item.conversation[0].content, 14)}
+           {truncateContent(item.conversation[0].content, 20)}
            </div>
            <DeleteOutlinedIcon onClick={()=> deleteConversation(item.id) } fontSize="small" className="text-red-600 cursor-pointer w-4 h-4 hover:shadow-sm"></DeleteOutlinedIcon>
           </li>

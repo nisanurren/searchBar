@@ -73,7 +73,7 @@ function SearchBar() {
   }, [latestResponse]);
 
   return (
-    <div className="w-full max-w-screen-lg m-auto">
+    <div className="w-6/12 max-w-screen-lg min-w-52	 m-auto sm:w-6/12 below-sm:w-full">
       <form
         className="w-full bg-white bg-opacity-10 p-8 rounded-xl "
         onSubmit={(e) => e.preventDefault()}
@@ -82,7 +82,7 @@ function SearchBar() {
           <input
             type="text"
             id="question"
-            className="w-full p-4 border h-14 border-[#ccdae7] rounded-xl text-[#ccdae7] bg-transparent shadow-md focus:outline-none focus:ring-2 focus:ring-[#ccdae7]"
+            className="w-full p-4 border h-14 border-[#ccdae7] rounded-[26px]  text-[#ccdae7] bg-transparent shadow-md focus:outline-none focus:ring-2 focus:ring-[#ccdae7]"
             placeholder="Ask anything..."
             onClick={() => setModalOpen(true)}
             readOnly

@@ -123,7 +123,7 @@ const SearchModal = ({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-      <div className="w-full rounded-lg shadow-lg relative" style={{width: 700}}>
+      <div className="w-full rounded-lg shadow-lg relative sm:mx-10 below-sm:m-5 " style={{width: 700}}>
         <div className="p-6 rounded-xl bg-white">
           <div className="flex justify-between items-center mb-4">
             <button
@@ -183,7 +183,7 @@ const SearchModal = ({
                   src="./fini-icon.png"
                   alt=""
                 />
-                <div className="rounded-lg text-left bg-gray-100 text-black animate-fadeIn p-2 rounded">
+                <div className="rounded-lg text-left bg-gray-100 text-black animate-fadeIn p-2">
                   <CircularProgress size={20} />
                 </div>
               </div>
@@ -195,7 +195,7 @@ const SearchModal = ({
                 ref={inputRef}
                 type="text"
                 id="question"
-                className="w-full p-3 h-14 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 h-14 border border-gray-300 rounded-[26px]  focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ask anything..."
                 value={question}
                 onChange={onQuestionChange}
