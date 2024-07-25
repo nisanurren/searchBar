@@ -12,7 +12,7 @@ You will need the following software installed on your system:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/nisanurren/project-name.git
+   git clone https://github.com/nisanurren/searchBar.git
 
 
    ```
