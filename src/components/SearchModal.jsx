@@ -127,7 +127,7 @@ const SearchModal = ({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-      <div className="w-full max-w-2xl rounded-lg shadow-lg relative">
+      <div className="w-full rounded-lg shadow-lg relative" style={{width: 700}}>
         <div className="p-6 rounded-xl bg-white">
           <div className="flex justify-between items-center mb-4">
             <button
@@ -141,7 +141,7 @@ const SearchModal = ({
               <CloseIcon />
             </button>
           </div>
-          <div ref={containerRef} className="mb-4 max-h-80 overflow-y-auto">
+          <div ref={containerRef} className="mb-4 overflow-y-auto"  style={{ maxHeight: 600 }} >
             {chatHistory.map(
               (entry, index) =>
                 entry.role !== "system" && (
