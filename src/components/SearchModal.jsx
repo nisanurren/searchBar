@@ -123,7 +123,7 @@ const SearchModal = ({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-      <div className="w-full rounded-lg shadow-lg relative sm:mx-10 below-sm:m-5 " style={{width: 700}}>
+      <div className="w-full rounded-lg shadow-lg relative sm:mx-10 below-sm:m-5 " style={{width: 770}}>
         <div className="p-6 rounded-xl bg-white">
           <div className="flex justify-between items-center mb-4">
             <button
@@ -161,7 +161,7 @@ const SearchModal = ({
                         className={`rounded-lg text-left break-words ${
                           entry.role === "user"
                             ? "bg-gray-600 text-white animate-fadeIn"
-                            : "bg-gray-100 text-black animate-fadeIn"
+                            : "bg-[#f4f4f4] text-black animate-fadeIn"
                         } p-2 rounded`}
                       >
                         {entry.role === "user"
@@ -195,7 +195,7 @@ const SearchModal = ({
                 ref={inputRef}
                 type="text"
                 id="question"
-                className="w-full p-3 h-14 border border-gray-300 rounded-[26px]  focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 h-14 rounded-[26px]  focus:outline-none  bg-[#f4f4f4]"
                 placeholder="Ask anything..."
                 value={question}
                 onChange={onQuestionChange}
