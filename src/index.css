@@ -4,10 +4,7 @@
 
 .primary-btn {
   width: "100%";
-  margintop: "0.5rem";
-  backgroundcolor: "#0052cc";
 }
 
 .primary-btn:hover {
-  backgroundcolor: "#023075";
 }

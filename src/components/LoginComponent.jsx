@@ -1,61 +1,53 @@
-import React from 'react';
-import { TextField, Button} from "@mui/material";
+import React from "react";
 import { useState, useEffect } from "react";
-import { useDispatch,useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { setApiKey } from '../store/userSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setToken } from "../store/userSlice";
+import { GoogleLogin } from "@react-oauth/google";
 
 const LoginComponent = () => {
+  const tokenFromStore = useSelector((state) => state.user.token);
 
-const [apiKey, setApiKeyLocal] = useState('');
-const apiKeyFromStore = useSelector((state) => state.user.apiKey);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-const dispatch = useDispatch();
-const navigate = useNavigate();
+  useEffect(() => {
+    if (tokenFromStore) {
+      navigate("/");
+    }
+  }, [tokenFromStore, navigate]);
 
-useEffect(() => {
-  if (apiKeyFromStore) {
-    navigate('/');
-  }
-}, [apiKeyFromStore, navigate]);
+  const handleSuccess = (response) => {
+    const token = response.credential;
+    dispatch(setToken(token));
+  };
 
-
-const handleApiKey = (e) => {
-  setApiKeyLocal(e.target.value);
-};
-
-const login = (e) =>{
-  e.preventDefault();
-  console.log(apiKey);
-  dispatch(setApiKey(apiKey));
-  navigate('/');
-}
+  const handleFailure = (error) => {
+    return error
+  };
 
   return (
-    <div className="min-h-screen flex items-center  w-full justify-center bg-gradient-custom">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-sm">
-        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-
-        <form action="submit" onSubmit={login}>
-
-        <TextField value={apiKey}  onChange={handleApiKey} className="w-full" id="outlined-basic" label="Credential" variant="outlined" />
-
-        <Button     sx={{
-        width: '100%',
-        marginTop: '0.5rem',
-        backgroundColor: '#0052cc', // Tailwind color slate-200
-        '&:hover': {
-          backgroundColor: '#023075', 
-        },
-      }} type="submit" className="w-full mt-2 bg-slate-200 rounded" variant="contained">Login</Button>
-
-
-        </form>
-
-   
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-sm">
+      <p className="text-center mb-6 text-gray-600">
+        Welcome! Please login to your account.
+      </p>
+      <div className="flex justify-center">
+        <GoogleLogin
+          onSuccess={handleSuccess}
+          onFailure={handleFailure}
+          onError={handleFailure}
+          size="large"
+          shape="pill"
+          width="250"
+          ux_mode="popup"
+          theme="filled_blue"
+          text="signin_with"
+        />
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default LoginComponent;

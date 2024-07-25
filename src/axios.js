@@ -1,5 +1,5 @@
 import axios from "axios";
-import { store } from './store'
+import.meta.env.VITE_API_KEY
 
 //const headers = {
 //   Authorization: 'Bearer ' + apiKey,
@@ -13,8 +13,9 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
     (config) => {
-        const state = store.getState();
-        const apiKey = state.user.apiKey;
+
+        const apiKey = import.meta.env.VITE_API_KEY
+
 
         if (apiKey) {
             config.headers.Authorization = `Bearer ${apiKey}`;
