@@ -1,11 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import CloseIcon from "@mui/icons-material/Close";
-import {
-  getConversations,
-  saveConversation,
-  getConversationById,
-} from "../utils/conversationManage";
+import ConversationService from "../utils/conversationManage";
 import { useSelector, useDispatch } from "react-redux";
 import {
   askQuestionToChatBot,
@@ -93,8 +89,8 @@ const SearchModal = ({
         question,
         conversation: chatHistory,
       };
-      saveConversation(updatedConversation); // Save the current chat
-      const fetchedConversations = getConversations();
+      ConversationService.saveConversation(updatedConversation); // Save the current chat
+      const fetchedConversations = ConversationService.getConversations();
       dispatch(setChats(fetchedConversations));
     }
     if (containerRef.current) {
@@ -116,8 +112,8 @@ const SearchModal = ({
       question,
       conversation: updatedChatHistory,
     };
-    saveConversation(updatedConversation);
-    const fetchedConversations = getConversations();
+    ConversationService.saveConversation(updatedConversation);
+    const fetchedConversations = ConversationService.getConversations();
     dispatch(setChats(fetchedConversations));
 
     onSubmit();

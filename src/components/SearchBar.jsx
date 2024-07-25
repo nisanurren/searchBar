@@ -3,9 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import SearchIcon from "@mui/icons-material/Search";
 import { askQuestionToChatBot, setQuestion } from "../store/questionSlice";
 import SearchModal from "../components/SearchModal";
-import { LocalHospital } from "@mui/icons-material";
-import History from "./History";
-import { getConversationById } from "../utils/conversationManage";
+import ConversationManage from "../utils/conversationManage";
 import { useOutletContext } from "react-router-dom";
 
 function SearchBar() {
@@ -34,7 +32,7 @@ function SearchBar() {
   };
 
   const openingChatTo = (a) => {
-    const selectedChatHistory = getConversationById(a);
+    const selectedChatHistory = ConversationManage.getConversationById(a);
     setSession(selectedChatHistory);
     setModalOpen(true);
   };
@@ -52,7 +50,7 @@ function SearchBar() {
   };
 
   const openSelectedChat = (value) => {
-    const selectedChatHistory = getConversationById(value);
+    const selectedChatHistory = ConversationManage.getConversationById(value);
     setSession(selectedChatHistory);
     setModalOpen(true);
   };
