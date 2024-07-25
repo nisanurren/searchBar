@@ -21,7 +21,8 @@ function History({ clickedItem }) {
   };
 
 
-  const deleteConversation =(id)=>{
+  const deleteConversation =(id, event)=>{
+    event.stopPropagation()
     ConversationService.deleteConversationById(id)
     const fetchedConversations = ConversationService.getConversations();
     dispatch(setChats(fetchedConversations)); 
@@ -33,12 +34,13 @@ function History({ clickedItem }) {
         {conversations.map((item) => (
           <li
             key={item.id}
-            className="flex justify-between items-center"
+            className="flex justify-between items-center cursor-pointer text-gray-700 p-3 hover:bg-gray-100 hover:text-gray-600 rounded-xl w-full"
+            onClick={() => clickedItem(item.id)}
           >
-           <div className="cursor-pointer text-gray-700 p-3 hover:bg-gray-100 hover:text-gray-600 rounded-xl w-full" onClick={() => clickedItem(item.id)}>
+           <div>
            {truncateContent(item.conversation[0].content, 20)}
            </div>
-           <DeleteOutlinedIcon onClick={()=> deleteConversation(item.id) } fontSize="small" className="text-red-600 cursor-pointer w-4 h-4 hover:shadow-sm"></DeleteOutlinedIcon>
+           <DeleteOutlinedIcon onClick={(event) => deleteConversation(item.id, event)} fontSize="small" className="text-gray-700 cursor-pointer w-4 h-4 hover:text-red-600"></DeleteOutlinedIcon>
           </li>
         ))}
       </ul>
